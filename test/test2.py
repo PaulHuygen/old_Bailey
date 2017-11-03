@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+# Find all tags
 import sys
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
@@ -113,7 +113,15 @@ def generate_casus_files(infilename, sessiondate, uri,  xmlsection):
             with open(path_to_naffile, 'w') as naff:
 #                naff.write(naffile(divi.findAll('p'), 'en', iso_sessiondate, uri, 'old_Bailey', infilename))
                 naff.write(naffile(extract_text_from_div1(divi), 'en', iso_sessiondate, uri, 'old_Bailey', infilename))
+
+def print_tags_in(elem):
+    for sube in elem.contents:
+        if sube.name:
+            print(sube.name)
+            print_tags_in(sube)
             
+
+                
 correctpat = re.compile('OBC2-(\d*).xml')
 for filename in os.listdir(corpusdir):
     m = correctpat.match(filename)
@@ -125,11 +133,15 @@ for filename in os.listdir(corpusdir):
     with open(filepath) as file:
         soup = BeautifulSoup(file, 'lxml')
         souptext = soup.find('text')
+        for para in souptext.find_all('p'):
+            print_tags_in(para)
+            
+        
 #        docdate = get_docdate_of(souptext)
-        doc_uri = get_docuri_of(souptext)
-        generate_frontmatter_file(filename, sessiondate, doc_uri, souptext)
-        generate_casus_files(filename, sessiondate, doc_uri, souptext)
-    break
+#        doc_uri = get_docuri_of(souptext)
+#        generate_frontmatter_file(filename, sessiondate, doc_uri, souptext)
+#        generate_casus_files(filename, sessiondate, doc_uri, souptext)
+#    break
 
         
 #        for divi in souptext.find_all('div1'):
