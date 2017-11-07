@@ -103,3 +103,17 @@ ENV/
 # emacs stuff
 */\#*
 */*~
+auto/*
+
+# nuweb stuff
+m4_*.w
+nuweb/old_bailey.w
+nuweb/old_bailey.tex
+nuweb/*.aux
+nuweb/*.blg
+nuweb/*.idx
+nuweb/*.ilg
+nuweb/*.ind
+nuweb/*.out
+nuweb/*.toc
+
